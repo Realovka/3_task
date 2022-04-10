@@ -1,12 +1,13 @@
 package com.company.testtask.service;
 
+import com.company.testtask.service.dto.PostingDto;
 import com.company.testtask.service.dto.PostingResponseDto;
 
 import java.util.List;
 
 public interface PostingService {
 
-    List<PostingResponseDto> findAll();
+    List<PostingDto> findAll();
 
     void saveInFile();
 

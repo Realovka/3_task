@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LoginDto {
+public class LoginFromFileDto {
     @CsvBindByPosition(position = 0)
     private String application;
     @CsvBindByPosition(position = 1)

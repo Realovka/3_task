@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PostingDto {
+public class PostingFromFileDto {
     @CsvBindByPosition(position = 0)
     private String matDoc;
     @CsvBindByPosition(position = 1)

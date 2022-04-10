@@ -1,7 +1,7 @@
 package com.company.testtask.service.mapper.impl;
 
 import com.company.testtask.dao.entity.Posting;
-import com.company.testtask.service.dto.PostingDto;
+import com.company.testtask.service.dto.PostingFromFileDto;
 import com.company.testtask.service.mapper.Mapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -12,16 +12,18 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.company.testtask.service.util.DataUtil.*;
+import static com.company.testtask.service.util.DataUtil.COMMA;
+import static com.company.testtask.service.util.DataUtil.DATA_FORMATTER;
+import static com.company.testtask.service.util.DataUtil.DOT;
 
 
 @Component
-public class PostingMapperImpl implements Mapper<List<Posting>, List<PostingDto>> {
+public class PostingMapperImpl implements Mapper<List<Posting>, List<PostingFromFileDto>> {
 
     @Override
-    public List<Posting> mapToEntity(List<PostingDto> postingDtos) {
+    public List<Posting> mapToEntity(List<PostingFromFileDto> postingFromFileDtos) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATA_FORMATTER);
-        return postingDtos.stream().map(postingDto -> Posting.builder()
+        return postingFromFileDtos.stream().map(postingDto -> Posting.builder()
                 .matDoc(Long.parseLong(postingDto.getMatDoc()))
                 .item(Long.parseLong(postingDto.getItem()))
                 .docDate(LocalDate.parse(postingDto.getDocDate(), formatter))

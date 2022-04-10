@@ -14,6 +14,7 @@ public class PostingResponseMapperAllFieldsImpl implements MapperToResponseDto<L
     @Override
     public List<PostingResponseDto> mapToResponseDto(List<Posting> postings) {
         return postings.stream().map(posting -> PostingResponseDto.builder()
+                .id(posting.getId())
                 .matDoc(posting.getMatDoc())
                 .item(posting.getItem())
                 .docDate(posting.getDocDate())

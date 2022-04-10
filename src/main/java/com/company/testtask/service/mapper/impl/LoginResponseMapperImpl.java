@@ -1,6 +1,6 @@
 package com.company.testtask.service.mapper.impl;
 
-import com.company.testtask.service.dto.LoginDto;
+import com.company.testtask.service.dto.LoginFromFileDto;
 import com.company.testtask.service.dto.LoginResponseDto;
 import com.company.testtask.service.mapper.MapperToResponseDto;
 import org.springframework.stereotype.Component;
@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class LoginResponseMapperImpl implements MapperToResponseDto<List<LoginResponseDto>, List<LoginDto>> {
+public class LoginResponseMapperImpl implements MapperToResponseDto<List<LoginResponseDto>, List<LoginFromFileDto>> {
 
     @Override
-    public List<LoginResponseDto> mapToResponseDto(List<LoginDto> dtos) {
+    public List<LoginResponseDto> mapToResponseDto(List<LoginFromFileDto> dtos) {
         return dtos.stream().map(loginDto -> LoginResponseDto.builder()
                 .application(loginDto.getApplication())
                 .appAccountName(loginDto.getAppAccountName())

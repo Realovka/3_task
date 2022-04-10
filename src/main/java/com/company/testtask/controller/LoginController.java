@@ -17,7 +17,6 @@ public class LoginController {
 
     private final LoginService loginService;
 
-
     @GetMapping
     public List<LoginResponseDto> findAll() {
        return loginService.findAll();

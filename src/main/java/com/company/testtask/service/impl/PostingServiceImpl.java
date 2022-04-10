@@ -3,8 +3,9 @@ package com.company.testtask.service.impl;
 import com.company.testtask.dao.entity.Posting;
 import com.company.testtask.dao.repository.PostingRepository;
 import com.company.testtask.service.PostingService;
-import com.company.testtask.service.dto.LoginDto;
+import com.company.testtask.service.dto.LoginFromFileDto;
 import com.company.testtask.service.dto.PostingDto;
+import com.company.testtask.service.dto.PostingFromFileDto;
 import com.company.testtask.service.dto.PostingResponseDto;
 import com.company.testtask.service.mapper.Mapper;
 import com.company.testtask.service.mapper.MapperToResponseDto;
@@ -27,30 +28,30 @@ public class PostingServiceImpl implements PostingService {
 
     private final PostingRepository postingRepository;
     private final EntityReader entityReader;
-    private final Mapper<List<Posting>, List<PostingDto>> postingMapper;
+    private final Mapper<List<Posting>, List<PostingFromFileDto>> postingMapper;
     private final MapperToResponseDto<List<PostingResponseDto>, List<Posting>> postingAllFieldsMapper;
-    private final MapperToResponseDto<List<PostingResponseDto>, List<PostingDto>> postingResponseDtoMapper;
-    private final Trimmer<List<PostingDto>> trimmer;
+    private final MapperToResponseDto<List<PostingDto>, List<PostingFromFileDto>> postingResponseDtoMapper;
+    private final Trimmer<List<PostingFromFileDto>> trimmer;
     private final WriterToFile writerToFile;
 
     @Override
-    public List<PostingResponseDto> findAll() {
-        List<PostingDto> postingDtos = entityReader.createPostingDtos(PATH_TO_POSTING_FILE);
-        return postingResponseDtoMapper.mapToResponseDto(postingDtos);
+    public List<PostingDto> findAll() {
+        List<PostingFromFileDto> postingFromFileDtos = entityReader.createPostingDtos(PATH_TO_POSTING_FILE);
+        return postingResponseDtoMapper.mapToResponseDto(postingFromFileDtos);
     }
 
     @Override
     public void saveInFile() {
-        List<PostingDto> postingDtos = entityReader.createPostingDtos(PATH_TO_POSTING_FILE);
-        addAuthorizedDelivery(postingDtos);
-        writerToFile.writeToFile(postingDtos, PATH_TO_POSTING_FILE);
+        List<PostingFromFileDto> postingFromFileDtos = entityReader.createPostingDtos(PATH_TO_POSTING_FILE);
+        addAuthorizedDelivery(postingFromFileDtos);
+        writerToFile.writeToFile(postingFromFileDtos, PATH_TO_POSTING_FILE);
     }
 
     @Override
     public void saveInDb() {
-        List<PostingDto> postingDtos = entityReader.createPostingDtos(PATH_TO_POSTING_FILE);
-        postingDtos = trimmer.trimTabulationSymbol(postingDtos);
-        List<Posting> postings = postingMapper.mapToEntity(postingDtos);
+        List<PostingFromFileDto> postingFromFileDtos = entityReader.createPostingDtos(PATH_TO_POSTING_FILE);
+        postingFromFileDtos = trimmer.trimTabulationSymbol(postingFromFileDtos);
+        List<Posting> postings = postingMapper.mapToEntity(postingFromFileDtos);
         postingRepository.saveAll(postings);
     }
 
@@ -60,9 +61,9 @@ public class PostingServiceImpl implements PostingService {
         return postingAllFieldsMapper.mapToResponseDto(postings);
     }
 
-    private void addAuthorizedDelivery(List<PostingDto> postingDtos) {
-       List<LoginDto> loginDtos = entityReader.createLoginDtos(PATH_TO_LOGINS_FILE);
-       postingDtos.forEach(postingDto -> postingDto.setAuthorizedDelivery(String.valueOf(loginDtos.stream().anyMatch(
+    private void addAuthorizedDelivery(List<PostingFromFileDto> postingFromFileDtos) {
+       List<LoginFromFileDto> loginFromFileDtos = entityReader.createLoginDtos(PATH_TO_LOGINS_FILE);
+       postingFromFileDtos.forEach(postingDto -> postingDto.setAuthorizedDelivery(String.valueOf(loginFromFileDtos.stream().anyMatch(
                loginDto -> loginDto.getAppAccountName().equals(postingDto.getUserName()) && loginDto.getIsActive().equals(TRUE)))));
     }
 }

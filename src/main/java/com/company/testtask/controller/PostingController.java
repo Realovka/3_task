@@ -1,9 +1,14 @@
 package com.company.testtask.controller;
 
 import com.company.testtask.service.PostingService;
+import com.company.testtask.service.dto.PostingDto;
 import com.company.testtask.service.dto.PostingResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -15,7 +20,7 @@ public class PostingController {
     private final PostingService postingService;
 
     @GetMapping
-    public List<PostingResponseDto> findAll() {
+    public List<PostingDto> findAll() {
         return postingService.findAll();
     }
 

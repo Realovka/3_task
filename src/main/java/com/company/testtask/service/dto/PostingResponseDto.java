@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Setter
 @Builder
 public class PostingResponseDto {
+    private long id;
     private long matDoc;
     private long item;
     private LocalDate docDate;

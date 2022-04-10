@@ -1,13 +1,13 @@
 package com.company.testtask.service.reader;
 
-import com.company.testtask.service.dto.LoginDto;
-import com.company.testtask.service.dto.PostingDto;
+import com.company.testtask.service.dto.LoginFromFileDto;
+import com.company.testtask.service.dto.PostingFromFileDto;
 
 import java.util.List;
 
 public interface EntityReader {
 
-    List<LoginDto> createLoginDtos(String pathToFile);
+    List<LoginFromFileDto> createLoginDtos(String pathToFile);
 
-    List<PostingDto> createPostingDtos(String pathToFile);
+    List<PostingFromFileDto> createPostingDtos(String pathToFile);
 }
